@@ -1,10 +1,10 @@
 import React from "react";
 import "./menu-item.styles.scss";
 
-const MenuItem = ({ section }) => {
-  const { title, size, imageUrl } = section;
+const MenuItem = (props) => {
+  const { title, size, imageUrl } = props.section;
   return (
-    <div className={size ? `${size} menu-item` : "menu-item"}>
+    <div className={size ? `${size} menu-item` : `menu-item`}>
       <div
         style={{ backgroundImage: `url(${imageUrl})` }}
         className="background-image"
