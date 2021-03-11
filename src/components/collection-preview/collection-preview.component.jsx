@@ -4,7 +4,7 @@ import "./collection-preview.styles.scss";
 
 const CollectionPreview = (props) => {
   const { title, items } = props.collection;
-  console.log("collection-preview");
+
   return (
     <div className="collection-preview">
       <h1 className="title">{title.toUpperCase()}</h1>
