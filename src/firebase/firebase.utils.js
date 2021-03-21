@@ -16,4 +16,11 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+/* Create an instance of the Google provider object */
+const provider = new firebase.auth.GoogleAuthProvider();
+/*Specify additional custom OAuth provider parameters */
+provider.setCustomParameters({ prompt: "select_account" });
+/* Authenticate with Firebase using the Google provider object, sign in with a pop-up window */
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
 export default firebase;
