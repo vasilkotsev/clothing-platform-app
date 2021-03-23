@@ -17,13 +17,14 @@ class App extends React.Component {
   unsubscribedFromAuth = null;
 
   componentDidMount() {
+    //open subscription
     this.unsubscribedFromAuth = auth.onAuthStateChanged((user) => {
       this.setState({ currentUser: user });
     });
   }
 
   componentWillUnmount() {
-    this.unsubscribedFromAuth(); // close open message subscription from firebase
+    this.unsubscribedFromAuth(); // close open subscription from firebase
   }
 
   render() {
