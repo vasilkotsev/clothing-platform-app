@@ -4,7 +4,7 @@ import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import "./App.css";
 
 class App extends React.Component {
@@ -17,14 +17,27 @@ class App extends React.Component {
   unsubscribedFromAuth = null;
 
   componentDidMount() {
-    //open subscription
-    this.unsubscribedFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
+    //open subscription firebase authentication
+    this.unsubscribedFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        //getting userRef object to check if database is updated
+        const userRef = await createUserProfileDocument(userAuth);
+
+        // Get the snapshot of userRef Document, set the state with userRef properties and listen for any userRef updates in database/subscribing/
+        userRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: { id: snapShot.id, ...snapShot.data() },
+          });
+        });
+      } else {
+        // set the state to null, when user is signed out
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
 
   componentWillUnmount() {
-    this.unsubscribedFromAuth(); // close open subscription from firebase
+    this.unsubscribedFromAuth(); // close open subscription from firebase authentication
   }
 
   render() {
