@@ -12,13 +12,16 @@ const firebaseConfig = {
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-  // checks if user is authenticated
+  /* checks if user is authenticated */
   if (!userAuth) return;
 
+  /* make a query request to Firestore */
   const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+  /* get snapshot object where we can get details about the actual data in this location */
   const snapShot = await userRef.get();
 
-  //checks if user data doesn't exists at this location
+  /* checks if user data doesn't exists at this location and store new data */
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -44,7 +47,7 @@ export const firestore = firebase.firestore();
 
 /* Create an instance of the Google provider object */
 const provider = new firebase.auth.GoogleAuthProvider();
-/*Specify additional custom OAuth provider parameters */
+/* Specify additional custom OAuth provider parameters */
 provider.setCustomParameters({ prompt: "select_account" });
 /* Authenticate with Firebase using the Google provider object, sign in with a pop-up window */
 export const signInWithGoogle = () => auth.signInWithPopup(provider);

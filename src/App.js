@@ -17,27 +17,29 @@ class App extends React.Component {
   unsubscribedFromAuth = null;
 
   componentDidMount() {
-    //open subscription firebase authentication
+    /* open subscription firebase authentication */
     this.unsubscribedFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        //getting userRef object to check if database is updated
+        /* store authenticated user data in firestore/if does not exists data in this location/ and getting userRef object */
         const userRef = await createUserProfileDocument(userAuth);
 
-        // Get the snapshot of userRef Document, set the state with userRef properties and listen for any userRef updates in database/subscribing/
+        /* Get the snapshot of userRef Document from Firestore, set the state with userRef properties
+        and listen for any userRef updates in database/subscribing/ */
         userRef.onSnapshot((snapShot) => {
           this.setState({
             currentUser: { id: snapShot.id, ...snapShot.data() },
           });
         });
       } else {
-        // set the state to null, when user is signed out
+        /* set the state to null, when user is signed out */
         this.setState({ currentUser: userAuth });
       }
     });
   }
 
   componentWillUnmount() {
-    this.unsubscribedFromAuth(); // close open subscription from firebase authentication
+    /* when call this method, it closes subscription from firebase authentication */
+    this.unsubscribedFromAuth();
   }
 
   render() {

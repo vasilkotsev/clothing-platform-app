@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import {
+  signInWithGoogle,
+  auth,
+  firestore,
+} from "../../firebase/firebase.utils";
 import "./sign-in.styles.scss";
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: "",
       password: "",
@@ -48,6 +52,7 @@ class SignIn extends Component {
           <div className="buttons-wrapper">
             <CustomButton type="submit">Sign in</CustomButton>
             <CustomButton
+              type="button"
               className="google-sign-in-button"
               onClick={signInWithGoogle}
             >
