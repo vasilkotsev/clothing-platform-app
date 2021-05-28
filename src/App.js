@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/user/user.actions";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
@@ -8,15 +10,11 @@ import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import "./App.css";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null,
-    };
-  }
   unsubscribedFromAuth = null;
 
   componentDidMount() {
+    const { setCurrentUser } = this.props;
+
     /* open subscription firebase authentication */
     this.unsubscribedFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -26,13 +24,11 @@ class App extends React.Component {
         /* Get the snapshot of userRef Document from Firestore, set the state with userRef properties
         and listen for any userRef updates in database/subscribing/ */
         userRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: { id: snapShot.id, ...snapShot.data() },
-          });
+          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
         });
       } else {
         /* set the state to null, when user is signed out */
-        this.setState({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -45,7 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
@@ -56,4 +52,13 @@ class App extends React.Component {
   }
 }
 
-export default App;
+/* When is passed as a second argument to connect(), this returns object which suplies dispatch function from redux.
+With these object methods/ which are merged as a props into the props component object/,
+we can use to send the actions into Store */
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: function (user) {
+    return dispatch(setCurrentUser(user));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(App);
