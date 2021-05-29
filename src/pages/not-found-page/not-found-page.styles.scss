@@ -1,0 +1,12 @@
+.not-found-page {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+
+  .not-found-page-title {
+    font-size: 70px;
+    font-weight: bolder;
+  }
+}
