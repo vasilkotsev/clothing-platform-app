@@ -46,7 +46,17 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route exact path="/sign-in" component={SignInAndSignUpPage} />
+          <Route
+            exact
+            path="/sign-in"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
           <Route path="/not-found" component={NotFoundPage} />
           <Redirect to="/not-found" />
         </Switch>
@@ -54,6 +64,10 @@ class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
 
 /* When is passed as a second argument to connect(), this returns object which suplies dispatch function from redux.
 With these object methods/ which are merged as a props into the props component object/,
@@ -64,4 +78,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
