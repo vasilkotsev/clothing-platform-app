@@ -69,13 +69,11 @@ const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
 });
 
-/* When is passed as a second argument to connect(), this returns object which suplies dispatch function from redux.
+/* When is passed as a second argument to connect(), this returns object which supplies dispatch function from redux.
 With these object methods/ which are merged as a props into the props component object/,
 we can use to send the actions into Store */
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: function (user) {
-    return dispatch(setCurrentUser(user));
-  },
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
