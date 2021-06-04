@@ -7,7 +7,7 @@ import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import "./header.styles.scss";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, hidden }) => {
   return (
     <header className="header">
       <Link className="logo-container" to="/">
@@ -31,16 +31,17 @@ const Header = ({ currentUser }) => {
         )}
         <CartIcon />
       </nav>
-      <CartDropdown />
+      {hidden ? null : <CartDropdown />}
     </header>
   );
 };
 
 /* When is passed as first argument to connect(), supplies the State object from Redux Store and gets the currentUser value from it.
 currentUser is merged into the component props object */
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => {
   return {
-    currentUser: state.user.currentUser,
+    currentUser,
+    hidden,
   };
 };
 
