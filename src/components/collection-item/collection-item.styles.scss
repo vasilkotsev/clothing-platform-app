@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 350px;
   align-items: center;
+  position: relative;
 
   .image-holder {
     overflow: hidden;
@@ -22,6 +23,26 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: 0.15s ease;
+    }
+  }
+
+  .custom-button {
+    width: 80%;
+    opacity: 0.7;
+    position: absolute;
+    top: 255px;
+    display: none;
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8;
+    }
+
+    .custom-button {
+      opacity: 0.85;
+      display: flex;
     }
   }
 

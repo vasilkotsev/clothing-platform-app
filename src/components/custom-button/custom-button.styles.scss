@@ -13,6 +13,9 @@
   font-weight: bolder;
   border: none;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  transition: 0.15s ease;
 
   &:hover {
     background-color: white;
@@ -26,6 +29,18 @@
 
     &:hover {
       background: #357ae8;
+      border: none;
+    }
+  }
+
+  &.inverted {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: black;
+      color: white;
       border: none;
     }
   }
