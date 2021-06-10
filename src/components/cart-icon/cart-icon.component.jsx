@@ -5,11 +5,17 @@ import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
 import "./cart-icon.styles.scss";
 
-const CartIcon = ({ toggleCartHidden, cart }) => {
+const CartIcon = ({ toggleCartHidden, cart: { cartItems } }) => {
+  let allCartItemsQuantity = 0;
+
+  cartItems.forEach((cartItem) => {
+    allCartItemsQuantity += cartItem.quantity;
+  });
+
   return (
     <div onClick={toggleCartHidden} className="cart-icon">
       <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">{cart.cartItems.length}</span>
+      <span className="item-count">{allCartItemsQuantity}</span>
     </div>
   );
 };

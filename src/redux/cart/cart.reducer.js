@@ -1,4 +1,5 @@
 import { TOGGLE_CART_HIDDEN, ADD_ITEM } from "./constants/cart.types";
+import { addItemToCart } from "./cart.utils";
 
 const INITIAL_STATE = {
   hidden: true,
@@ -14,7 +15,10 @@ const cartReducer = (state = INITIAL_STATE, action) => {
                               instead to get and set action.payload value from the action */,
     };
   } else if (action.type === ADD_ITEM) {
-    return { ...state, cartItems: [...state.cartItems, action.payload] };
+    return {
+      ...state,
+      cartItems: addItemToCart(state.cartItems, action.payload),
+    };
   } else return state;
 };
 
