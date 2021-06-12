@@ -5,7 +5,7 @@ import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
 import "./cart-icon.styles.scss";
 
-const CartIcon = ({ toggleCartHidden, cart: { cartItems } }) => {
+const CartIcon = ({ toggleCartHidden, cartItems }) => {
   let allCartItemsQuantity = 0;
 
   cartItems.forEach((cartItem) => {
@@ -20,8 +20,8 @@ const CartIcon = ({ toggleCartHidden, cart: { cartItems } }) => {
   );
 };
 
-const mapStateToProps = ({ cart }) => ({
-  cart,
+const mapStateToProps = ({ cart: { cartItems } }) => ({
+  cartItems,
 });
 
 const mapDispatchToProps = (dispatch) => ({
