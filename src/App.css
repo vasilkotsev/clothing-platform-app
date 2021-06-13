@@ -1,10 +1,9 @@
 body {
-    font-family: 'Open Sans Condensed', sans-serif;
-    padding: 20px 40px;
+  font-family: "Open Sans Condensed", sans-serif;
+  padding: 20px 40px;
 }
 
 a {
-    text-decoration: none;
-    color: #000000;
+  text-decoration: none;
+  color: #000000;
 }
-
